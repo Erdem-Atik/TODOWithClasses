@@ -1,0 +1,59 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  border: 2px solid red;
+}
+h1 {
+  text-align: center;
+}
+
+body {
+  background-image: linear-gradient(90deg, #37723f 0%, #fda085 100%);
+  min-height: 100vh;
+}
+
+form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 30vh;
+}
+
+form input,
+form button {
+  padding: 3rem;
+}
+
+select {
+  padding: 3rem;
+}
+
+.todo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.list-item {
+  display: flex;
+  justify-content: space-around;
+}
+
+.modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70%;
+  display: flex;
+  background-color: white;
+  padding: 6rem;
+  border-radius: 5px;
+  box-shadow: 0 3rem 5rem rgba(0, 0, 0, 0.3);
+  z-index: 10;
+}
+
+.hidden {
+  display: none;
+}
