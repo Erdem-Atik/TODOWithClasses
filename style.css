@@ -2,37 +2,83 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  border: 2px solid red;
+  font-family: "Dongle", sans-serif;
+  font-family: "Poppins", sans-serif;
+  font-family: "Roboto", sans-serif;
+
+  /* border: 2px solid red; */
 }
 h1 {
   text-align: center;
+  color: #b91c1c;
+  padding-top: 5rem;
+  padding-bottom: 0;
+  font-size: 3rem;
 }
 
 body {
-  background-image: linear-gradient(90deg, #37723f 0%, #fda085 100%);
   min-height: 100vh;
+  background-color: #832e2e;
+}
+.toDo-container {
+  position: relative;
+  background-image: url("backGroundPostIT.jpg");
+  background-size: cover;
+  background-color: rgb(255, 255, 255);
+  width: 70%;
+  margin: auto;
+  min-height: 100vh;
+  border: 5px solid #37723f;
 }
 
 form {
+  padding-top: 7rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 30vh;
+  min-height: 25vh;
 }
 
-form input,
-form button {
-  padding: 3rem;
+input {
+  height: 4rem;
+  width: 20rem;
+  margin: 0;
+  border: 5px solid #37723f;
+  border-radius: 2px;
+  font-size: 1.5rem;
 }
 
+input:hover {
+  opacity: 0.7;
+  color: blue;
+}
 select {
-  padding: 3rem;
+  height: 4rem;
+  width: 4rem;
+  font-size: 1.5rem;
+  border: 5px solid #37723f;
+}
+select:hover {
+  opacity: 0.7;
+  color: blue;
 }
 
-.todo-container {
+.todo-button {
+  height: 4rem;
+  width: 4rem;
+  border: 5px solid #37723f;
+  font-size: 1.5rem;
+}
+
+.todo-button:hover {
+  opacity: 0.7;
+  color: blue;
+}
+.todolist-container {
   display: flex;
   justify-content: center;
   align-items: center;
+  list-style-type: none;
 }
 
 .list-item {
@@ -45,15 +91,67 @@ select {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 70%;
+  width: 50%;
   display: flex;
   background-color: white;
-  padding: 6rem;
-  border-radius: 5px;
   box-shadow: 0 3rem 5rem rgba(0, 0, 0, 0.3);
-  z-index: 10;
+  justify-self: center;
+  text-align: center;
+  padding: 2rem 1rem 2rem 1rem;
+  border: 3px solid #37723f;
+  border-radius: 5px;
+}
+
+.modal-notification {
+  margin: 0;
+  font-size: 2rem;
+  padding: 0;
+}
+
+.close-modal {
+  position: absolute;
+  right: 2rem;
+  font-size: 2rem;
+  color: #333;
+  cursor: pointer;
+  background: none;
+  border: none;
+  margin-left: 0.2rem;
 }
 
 .hidden {
   display: none;
+}
+
+.todo {
+  display: flex;
+  color: #fd0606;
+  font-size: 2rem;
+}
+
+.todo-item {
+  display: flex;
+  padding: 1.5rem 1rem 1.5rem 1rem;
+  justify-content: center;
+  text-align: center;
+}
+
+.completed {
+  color: #0af82a;
+}
+
+.complete-btn,
+.delete-btn {
+  background: none;
+  border: none;
+  margin: 0;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  color: #fd0606;
+  font-size: 2.1rem;
+}
+
+.fa-check .fa-trash {
+  padding: 2.5rem;
+  margin: 0;
 }

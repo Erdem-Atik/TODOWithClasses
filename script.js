@@ -8,9 +8,9 @@ const appElements = document.querySelectorAll("form, .todo-container");
 const marker = function (desc) {
   const markup = ` 
   <div class="todo">
-  <li class="todo-item">${desc}</li>
-  <i class="fas fa-check"></i>
-  <i class="fas fa-trash">
+  <li class="todo-item"><strong>${desc}</strong></li>
+  <button class= "complete-btn"><i class="fas fa-check"></i></button>
+  <button class= "delete-btn"><i class="fas fa-trash"></i></button>
 </div>`;
   toDolist.insertAdjacentHTML("afterbegin", markup);
 };
@@ -53,9 +53,10 @@ const deleteTodo = function (el) {
 
   if (item.classList.contains("fa-trash")) {
     const deletingEl = item.parentElement;
-    console.log(deletingEl);
-    deletingEl.remove();
-    removeLocalTodos(deletingEl);
+    const deletingEl2 = deletingEl.parentElement; // workaround, it should be permanent solution
+    console.log(deletingEl2);
+    deletingEl2.remove();
+    removeLocalTodos(deletingEl2);
   }
 };
 //
@@ -64,8 +65,9 @@ toDolist.addEventListener("click", deleteTodo);
 const comleteToDo = function (e) {
   const completeditem = e.target;
   if (completeditem.classList.contains("fa-check")) {
-    const completed = completeditem.parentElement;
-    completed.classList.toggle("completed");
+    const completed = completeditem.parentElement; // workaround, it should be permanent solution
+    const completed2 = completed.parentElement;
+    completed2.classList.toggle("completed");
   }
 };
 // complete toDos
