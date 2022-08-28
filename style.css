@@ -133,6 +133,12 @@ select:hover {
   display: flex;
   padding: 1.5rem 1rem 1.5rem 1rem;
   justify-content: center;
+ 
+}
+
+.importance-todo{
+  font-size: 1rem;
+  width: 9rem;
   text-align: center;
 }
 

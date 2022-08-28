@@ -5,6 +5,33 @@ const modal = document.querySelector(".modal");
 const filter = document.querySelector(".filter-todo");
 const appElements = document.querySelectorAll("form, .todo-container");
 
+
+const Task = class {
+  constructor(dscrpt,impLevel){
+    this.dscrpt = dscrpt
+    this.impLevel=impLevel
+
+  }
+  getDetail(){
+    return (this.dscrpt,this.impLevel, this.dline )
+  }
+}
+
+
+const App = class {
+  constructor(){
+
+  }
+}
+
+
+const app = new App
+
+
+
+
+
+
 const marker = function (desc) {
   const markup = ` 
   <div class="todo">
@@ -14,6 +41,10 @@ const marker = function (desc) {
 </div>`;
   toDolist.insertAdjacentHTML("afterbegin", markup);
 };
+
+
+
+
 
 const addToDo = function () {
   // appears the notification in case user doesn't write anything input area
@@ -26,6 +57,7 @@ const addToDo = function () {
   }
   if (toDoDesc.value) {
     marker(toDoDesc.value);
+
   }
   saveLocalTodos(toDoDesc.value);
   toDoDesc.value = "";
