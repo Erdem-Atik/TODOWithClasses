@@ -6,26 +6,32 @@ const filter = document.querySelector(".filter-todo");
 const appElements = document.querySelectorAll("form, .todo-container");
 
 
-const Task = class {
-  constructor(dscrpt,impLevel){
-    this.dscrpt = dscrpt
-    this.impLevel=impLevel
-
-  }
-  getDetail(){
-    return (this.dscrpt,this.impLevel, this.dline )
-  }
-}
+// const Task = class {
+//   constructor(dscrpt,impLevel){
+//     this.dscrpt = dscrpt
+//     this.impLevel=impLevel
+//   }
+ 
+// }
 
 
-const App = class {
-  constructor(){
+// const App = class {
+//   constructor(toAddbutton){
+//     toAddbutton.addEventListener('click', this.newTask)
+//   }
 
-  }
-}
+//   newTask(){
+//     let newT = 
+
+//   }
+// }
 
 
-const app = new App
+
+
+
+
+// const app = new App
 
 
 
