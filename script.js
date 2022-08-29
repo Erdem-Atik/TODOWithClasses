@@ -4,44 +4,16 @@ const toDolist = document.querySelector(".todo-list");
 const modal = document.querySelector(".modal");
 const filter = document.querySelector(".filter-todo");
 const appElements = document.querySelectorAll("form, .todo-container");
-
-
-// const Task = class {
-//   constructor(dscrpt,impLevel){
-//     this.dscrpt = dscrpt
-//     this.impLevel=impLevel
-//   }
- 
-// }
-
-
-// const App = class {
-//   constructor(toAddbutton){
-//     toAddbutton.addEventListener('click', this.newTask)
-//   }
-
-//   newTask(){
-//     let newT = 
-
-//   }
-// }
-
-
-
-
-
-
-// const app = new App
-
-
-
-
+const delBtn= document.querySelector('.todo-buttondel')
+const impToDo = document.querySelector('.importance-todo')
 
 
 const marker = function (desc) {
+
   const markup = ` 
   <div class="todo">
   <li class="todo-item"><strong>${desc}</strong></li>
+  <li class="todo-item"><strong>${impToDo.value}</strong></li>
   <button class= "complete-btn"><i class="fas fa-check"></i></button>
   <button class= "delete-btn"><i class="fas fa-trash"></i></button>
 </div>`;
@@ -62,16 +34,16 @@ const addToDo = function () {
     return;
   }
   if (toDoDesc.value) {
-    marker(toDoDesc.value);
+   marker(toDoDesc.value);
 
   }
   saveLocalTodos(toDoDesc.value);
-  toDoDesc.value = "";
+   toDoDesc.value = "";
 };
 
 toAddbutton.addEventListener("click", function (e) {
-  e.preventDefault(); // research that!
-  addToDo();
+  // e.preventDefault(); // research that!
+  // addToDo();
 });
 //closing the notification
 modal.addEventListener("click", function (e) {
@@ -92,7 +64,6 @@ const deleteTodo = function (el) {
   if (item.classList.contains("fa-trash")) {
     const deletingEl = item.parentElement;
     const deletingEl2 = deletingEl.parentElement; // workaround, it should be permanent solution
-    console.log(deletingEl2);
     deletingEl2.remove();
     removeLocalTodos(deletingEl2);
   }
@@ -163,4 +134,38 @@ const getTodos = function () {
   });
 };
 
+
+const Task = class {
+  constructor(dscrpt,impLevel){
+    this.dscrpt = dscrpt
+    this.impLevel=impLevel
+  }
+}
+
+
+
+const App = class {
+  constructor(){
+   
+    toAddbutton.addEventListener('click', this.newTask)
+  }
+
+  newTask(e){
+  
+   e.preventDefault();
+   addToDo()
+   
+   const ntask = new Task(toDoDesc.value,impToDo.value) 
+  }
+  
+}
+
+
+const app = new App()
+
+
+
 document.addEventListener("DOMContentLoaded", getTodos);
+
+
+
