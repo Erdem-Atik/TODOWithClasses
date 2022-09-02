@@ -7,57 +7,31 @@ const appElements = document.querySelectorAll("form, .todo-container");
 const delBtn = document.querySelector(".todo-buttondel");
 const impToDo = document.querySelector(".importance-todo");
 
-const marker = function (newTask) {
-  const markup = ` 
-  <div class="todo"  data-id="${newTask.id}" >
-    <li class="todo-item"><strong>${newTask.descrpt}</strong></li>
-    <li class="todo-item"><strong>${newTask.level}</strong></li>
-    <button class= "complete-btn"><i class="fas fa-check"></i></button>
-    <button class= "delete-btn"><i class="fas fa-trash"></i></button>
-  </div>`;
-  toDolist.insertAdjacentHTML("afterbegin", markup);
-};
-
-//filtering toDos whether they are completed or not
-//filter.addEventListener("click", filterTodo);
-
-const localcontrol = function () {
-  let todos;
-  return localStorage.getItem("todos") === null
-    ? (todos = [])
-    : (todos = JSON.parse(localStorage.getItem("todos")));
-};
-
-const saveLocalTodos = function (todo) {
-  const todos = localcontrol();
-  todos.push(todo);
-  localStorage.setItem("todos", JSON.stringify(todos));
-};
-
-const getTodos = function () {
-  const todos = localcontrol();
-  todos.forEach((todoDescript) => {
-    marker(todoDescript);
-  });
-};
-
 const Task = class {
   id = (Date.now() + "").slice(-10);
-  constructor(descrpt, level) {
+  constructor(descrpt, level, status) {
     this.descrpt = descrpt;
     this.level = level;
+    this.status = status;
   }
 };
 
 const LetToDo = class {
-  tasks = [];
-
+  //  tasks = [];
   constructor() {
+    document.addEventListener("DOMContentLoaded", this.getTodos.bind(this));
     toAddbutton.addEventListener("click", this.producenewTask.bind(this));
     modal.addEventListener("click", this.removeModal);
     toDolist.addEventListener("click", this.deleteTodo.bind(this));
     toDolist.addEventListener("click", this.comleteToDo);
     filter.addEventListener("click", this.filterTodo);
+  }
+
+  getTodos() {
+    const todos = this.localcontrol();
+    todos.forEach((newTask) => {
+      this.renderTask(newTask);
+    });
   }
 
   producenewTask(e) {
@@ -74,7 +48,6 @@ const LetToDo = class {
       e.preventDefault();
       newTask = new Task(toDoDesc.value, impToDo.value);
       newTask.id = newTask.id + 1;
-      console.log(newTask);
       this.renderTask(newTask);
     }
     toDoDesc.value = "";
@@ -125,6 +98,7 @@ const LetToDo = class {
       const deletingTask = deletingEl2.dataset.id;
       deletingEl2.remove();
       console.log(todos);
+      //
       const updatedTodos = todos.filter((item) => item.id !== deletingTask);
       localStorage.setItem("todos", JSON.stringify(updatedTodos));
     }
@@ -162,5 +136,3 @@ const LetToDo = class {
 };
 
 const toDoApp = new LetToDo();
-
-document.addEventListener("DOMContentLoaded", getTodos);
