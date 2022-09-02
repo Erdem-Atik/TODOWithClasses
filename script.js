@@ -23,8 +23,8 @@ const LetToDo = class {
     toAddbutton.addEventListener("click", this.producenewTask.bind(this));
     modal.addEventListener("click", this.removeModal);
     toDolist.addEventListener("click", this.deleteTodo.bind(this));
-    toDolist.addEventListener("click", this.comleteToDo);
-    filter.addEventListener("click", this.filterTodo);
+    toDolist.addEventListener("click", this.comleteToDo.bind(this));
+    filter.addEventListener("click", this.filterTodo.bind(this));
   }
 
   getTodos() {
@@ -84,6 +84,7 @@ const LetToDo = class {
       ? (todos = [])
       : (todos = JSON.parse(localStorage.getItem("todos")));
   }
+
   saveLocalTodos(newTask) {
     const todos = this.localcontrol();
     todos.push(newTask);
@@ -106,8 +107,17 @@ const LetToDo = class {
   comleteToDo(e) {
     const completeditem = e.target;
     if (completeditem.classList.contains("fa-check")) {
+      const todos = this.localcontrol();
       const completed = completeditem.parentElement; // workaround, it should be permanent solution
       completed.parentElement.classList.toggle("completed");
+      const completedTaskId = completed.parentElement.dataset.id;
+      todos.forEach((el) => {
+        if (el.id === completedTaskId) {
+          el.status = "done";
+        }
+      });
+      console.log(todos);
+      localStorage.setItem("todos", JSON.stringify(todos));
     }
   }
   filterTodo(e) {
