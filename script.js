@@ -56,40 +56,34 @@ const saveLocalTodos = function (todo) {
   localStorage.setItem("todos", JSON.stringify(todos));
 };
 
-const removeLocalTodos = function (todo) {
-  const todos = localcontrol();
-  const todoIndex = todo.children[0].innerText;
-  todos.splice(todos.indexOf(todoIndex), 1);
-  localStorage.setItem("todos", JSON.stringify(todos));
-};
-
-const getTodos = function () {
-  //   const todos = localcontrol();
-  //   todos.forEach((todoDescript) => {
-  //     marker(todoDescript);
-  //   });
-};
+// const getTodos = function () {
+//   const todos = localcontrol();
+//   todos.forEach((todoDescript) => {
+//     marker(todoDescript);
+//   });
+// };
 
 const Task = class {
+  id = (Date.now() + "").slice(-10);
   constructor(descrpt, level) {
     this.descrpt = descrpt;
     this.level = level;
   }
 };
 
-const App = class {
+const LetToDo = class {
   tasks = [];
 
   constructor() {
-    toAddbutton.addEventListener("click", this.ProducenewTask.bind(this));
+    toAddbutton.addEventListener("click", this.producenewTask.bind(this));
     modal.addEventListener("click", this.removeModal);
-    toDolist.addEventListener("click", this.deleteTodo);
+    toDolist.addEventListener("click", this.deleteTodo.bind(this));
+    toDolist.addEventListener("click", this.comleteToDo);
   }
 
-  ProducenewTask(e) {
+  producenewTask(e) {
     e.preventDefault();
     let newTask;
-
     if (!toDoDesc.value) {
       modal.classList.remove("hidden");
       appElements.forEach((el) => {
@@ -100,23 +94,14 @@ const App = class {
     if (toDoDesc.value) {
       e.preventDefault();
       newTask = new Task(toDoDesc.value, impToDo.value);
+      newTask.id = newTask.id + 1;
+      console.log(newTask);
       this.renderTask(newTask);
     }
-
     toDoDesc.value = "";
     impToDo.selectedIndex = "1";
+    this.saveLocalTodos(newTask);
   }
-  renderTask(newTask) {
-    const markup = ` 
-    <div class="todo">
-      <li class="todo-item"><strong>${newTask.descrpt}</strong></li>
-      <li class="todo-item"><strong>${newTask.level}</strong></li>
-      <button class= "complete-btn"><i class="fas fa-check"></i></button>
-      <button class= "delete-btn"><i class="fas fa-trash"></i></button>
-    </div>`;
-    toDolist.insertAdjacentHTML("afterbegin", markup);
-  }
-
   removeModal(e) {
     //closing the notification
     // add click and escape feature!
@@ -130,20 +115,53 @@ const App = class {
     }
   }
 
+  renderTask(newTask) {
+    const markup = ` 
+    <div class="todo"  data-id="${newTask.id}" >
+      <li class="todo-item"><strong>${newTask.descrpt}</strong></li>
+      <li class="todo-item"><strong>${newTask.level}</strong></li>
+      <button class= "complete-btn"><i class="fas fa-check"></i></button>
+      <button class= "delete-btn"><i class="fas fa-trash"></i></button>
+    </div>`;
+    toDolist.insertAdjacentHTML("afterbegin", markup);
+  }
+
+  localcontrol() {
+    let todos;
+    return localStorage.getItem("todos") === null
+      ? (todos = [])
+      : (todos = JSON.parse(localStorage.getItem("todos")));
+  }
+  saveLocalTodos(newTask) {
+    const todos = this.localcontrol();
+    todos.push(newTask);
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }
   deleteTodo(e) {
     const item = e.target;
     if (item.classList.contains("fa-trash")) {
+      const todos = this.localcontrol();
       const deletingEl = item.parentElement;
       const deletingEl2 = deletingEl.parentElement; // workaround, it should be permanent solution
+      const deletingTask = deletingEl2.dataset.id;
       deletingEl2.remove();
-      removeLocalTodos(deletingEl2);
+      console.log(todos);
+      const updatedTodos = todos.filter((item) => item.id !== deletingTask);
+      localStorage.setItem("todos", JSON.stringify(updatedTodos));
     }
   }
-  controllocal() {
-    console.log("works");
+  comleteToDo(e) {
+    const completeditem = e.target;
+    if (completeditem.classList.contains("fa-check")) {
+      const completed = completeditem.parentElement; // workaround, it should be permanent solution
+      const completed2 = completed.parentElement;
+      const completedTaskId = completed2.dataset.id;
+      console.log(completed2);
+      completed2.classList.toggle("completed");
+    }
   }
 };
 
-const app = new App();
+const toDoApp = new LetToDo();
 
-document.addEventListener("DOMContentLoaded", getTodos);
+//document.addEventListener("DOMContentLoaded", getTodos);
