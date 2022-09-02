@@ -7,6 +7,17 @@ const appElements = document.querySelectorAll("form, .todo-container");
 const delBtn = document.querySelector(".todo-buttondel");
 const impToDo = document.querySelector(".importance-todo");
 
+const marker = function (newTask) {
+  const markup = ` 
+  <div class="todo"  data-id="${newTask.id}" >
+    <li class="todo-item"><strong>${newTask.descrpt}</strong></li>
+    <li class="todo-item"><strong>${newTask.level}</strong></li>
+    <button class= "complete-btn"><i class="fas fa-check"></i></button>
+    <button class= "delete-btn"><i class="fas fa-trash"></i></button>
+  </div>`;
+  toDolist.insertAdjacentHTML("afterbegin", markup);
+};
+
 const comleteToDo = function (e) {
   const completeditem = e.target;
   if (completeditem.classList.contains("fa-check")) {
@@ -56,12 +67,12 @@ const saveLocalTodos = function (todo) {
   localStorage.setItem("todos", JSON.stringify(todos));
 };
 
-// const getTodos = function () {
-//   const todos = localcontrol();
-//   todos.forEach((todoDescript) => {
-//     marker(todoDescript);
-//   });
-// };
+const getTodos = function () {
+  const todos = localcontrol();
+  todos.forEach((todoDescript) => {
+    marker(todoDescript);
+  });
+};
 
 const Task = class {
   id = (Date.now() + "").slice(-10);
@@ -158,10 +169,11 @@ const LetToDo = class {
       const completedTaskId = completed2.dataset.id;
       console.log(completed2);
       completed2.classList.toggle("completed");
+      console.log(completed2);
     }
   }
 };
 
 const toDoApp = new LetToDo();
 
-//document.addEventListener("DOMContentLoaded", getTodos);
+document.addEventListener("DOMContentLoaded", getTodos);
