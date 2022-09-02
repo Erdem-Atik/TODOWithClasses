@@ -18,41 +18,8 @@ const marker = function (newTask) {
   toDolist.insertAdjacentHTML("afterbegin", markup);
 };
 
-const comleteToDo = function (e) {
-  const completeditem = e.target;
-  if (completeditem.classList.contains("fa-check")) {
-    const completed = completeditem.parentElement; // workaround, it should be permanent solution
-    const completed2 = completed.parentElement;
-    completed2.classList.toggle("completed");
-  }
-};
-// complete toDos
-toDolist.addEventListener("click", comleteToDo);
-
-const filterTodo = function (e) {
-  const todosNode = toDolist.childNodes; //select child Nodes of Parent Node
-  const convertedfromNode = Array.from(todosNode); // convert from Nodelist to Array
-  const filtered = convertedfromNode.filter((el) => el.nodeType === 1); // select just div.todo nodes; div.todo nodetype 1
-
-  filtered.forEach((todo) => {
-    switch (e.target.value) {
-      case "all":
-        todo.style.display = "flex";
-        break;
-      case "completed":
-        todo.classList.contains("completed")
-          ? (todo.style.display = "flex")
-          : (todo.style.display = "none");
-        break;
-      case "uncompleted":
-        !todo.classList.contains("completed")
-          ? (todo.style.display = "flex")
-          : (todo.style.display = "none");
-    }
-  });
-};
 //filtering toDos whether they are completed or not
-filter.addEventListener("click", filterTodo);
+//filter.addEventListener("click", filterTodo);
 
 const localcontrol = function () {
   let todos;
@@ -90,6 +57,7 @@ const LetToDo = class {
     modal.addEventListener("click", this.removeModal);
     toDolist.addEventListener("click", this.deleteTodo.bind(this));
     toDolist.addEventListener("click", this.comleteToDo);
+    filter.addEventListener("click", this.filterTodo);
   }
 
   producenewTask(e) {
@@ -165,12 +133,31 @@ const LetToDo = class {
     const completeditem = e.target;
     if (completeditem.classList.contains("fa-check")) {
       const completed = completeditem.parentElement; // workaround, it should be permanent solution
-      const completed2 = completed.parentElement;
-      const completedTaskId = completed2.dataset.id;
-      console.log(completed2);
-      completed2.classList.toggle("completed");
-      console.log(completed2);
+      completed.parentElement.classList.toggle("completed");
     }
+  }
+  filterTodo(e) {
+    //filtering toDos whether they are completed or not
+    const todosNode = toDolist.childNodes; //select child Nodes of Parent Node
+    const convertedfromNode = Array.from(todosNode); // convert from Nodelist to Array
+    const filtered = convertedfromNode.filter((el) => el.nodeType === 1); // select just div.todo nodes; div.todo nodetype 1
+
+    filtered.forEach((todo) => {
+      switch (e.target.value) {
+        case "all":
+          todo.style.display = "flex";
+          break;
+        case "completed":
+          todo.classList.contains("completed")
+            ? (todo.style.display = "flex")
+            : (todo.style.display = "none");
+          break;
+        case "uncompleted":
+          !todo.classList.contains("completed")
+            ? (todo.style.display = "flex")
+            : (todo.style.display = "none");
+      }
+    });
   }
 };
 
