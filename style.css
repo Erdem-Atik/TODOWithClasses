@@ -30,13 +30,21 @@ body {
   min-height: 100vh;
   border: 5px solid #37723f;
 }
+.titles {
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  color: #fd0606;
+}
 
 form {
-  padding-top: 7rem;
+  padding-top: 0.3rem;
+  margin-top: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 25vh;
+  min-height: 18vh;
 }
 
 input {
@@ -53,9 +61,9 @@ input:hover {
   color: blue;
 }
 select {
+  font-size: 1rem;
   height: 4rem;
-  width: 4rem;
-  font-size: 1.5rem;
+  width: 7rem;
   border: 5px solid #37723f;
 }
 select:hover {
@@ -133,10 +141,9 @@ select:hover {
   display: flex;
   padding: 1.5rem 1rem 1.5rem 1rem;
   justify-content: center;
- 
 }
 
-.importance-todo{
+.importance-todo {
   font-size: 1rem;
   width: 9rem;
   text-align: center;

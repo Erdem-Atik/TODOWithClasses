@@ -69,7 +69,9 @@ const LetToDo = class {
 
   renderTask(newTask) {
     const markup = ` 
-    <div class="todo"  data-id="${newTask.id}" >
+    <div class="${
+      newTask.status == "done" ? "todo completed" : "todo"
+    }"  data-id="${newTask.id}" >
       <li class="todo-item"><strong>${newTask.descrpt}</strong></li>
       <li class="todo-item"><strong>${newTask.level}</strong></li>
       <button class= "complete-btn"><i class="fas fa-check"></i></button>
