@@ -72,7 +72,7 @@ const LetToDo = class {
     <div class="${
       newTask.status == "done" ? "todo completed" : "todo"
     }"  data-id="${newTask.id}" >
-      <li class="todo-item"><strong>${newTask.descrpt}</strong></li>
+      <li class="todo-item-dec"><strong>${newTask.descrpt}</strong></li>
       <li class="todo-item"><strong>${newTask.level}</strong></li>
       <button class= "complete-btn"><i class="fas fa-check"></i></button>
       <button class= "delete-btn"><i class="fas fa-trash"></i></button>

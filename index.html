@@ -30,7 +30,6 @@
   </head>
   <body>
     <div class="toDo-container">
-      <header><h1>TODO APP</h1></header>
       <div class="modal hidden">
         <p class="modal-notification">Please write a TODO description!</p>
         <button class="close-modal">&times;</button>
@@ -44,7 +43,7 @@
         <div class="importance-select">
           <select name="importance" class="importance-todo">
             <option value="high">High</option>
-            <option selected="selected" value="medium">Medium</option>
+            <option selected="selected" value="moderate">Moderate</option>
             <option value="low">Low</option>
           </select>
         </div>
@@ -60,6 +59,10 @@
         </div>
       </form>
       <div class="todolist-container">
+        <div class="titles-2">
+          <h3>Task</h3>
+          <h3>Level</h3>
+        </div>
         <ul class="todo-list"></ul>
       </div>
     </div>
