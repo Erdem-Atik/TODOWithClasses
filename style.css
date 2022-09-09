@@ -5,6 +5,7 @@
   font-family: "Dongle", sans-serif;
   font-family: "Poppins", sans-serif;
   font-family: "Roboto", sans-serif;
+  /* border: 2px solid red; */
 }
 
 body {
@@ -33,33 +34,45 @@ form {
 }
 .titles {
   display: flex;
-  text-align: center;
+  /* text-align: center; */
   align-items: center;
-  justify-content: space-evenly;
+  align-content: stretch;
+  /* justify-content: space-evenly; */
+  padding: 0;
+  width: auto;
   color: #061bfd;
-  margin-right: 11rem;
-  margin-left: 2rem;
-  margin-top: 5rem;
+  margin-top: 0;
+  margin-right: 0;
+  margin-left: 14rem;
+}
+
+.taskDesc {
+  padding-left: 0;
+  width: 12rem;
+}
+
+.importanceLevel {
+  text-align: right;
+  width: 12rem;
 }
 
 .titles-2 {
-  border: 2px dotted;
   width: 50%;
   text-align: center;
   display: flex;
   justify-content: space-evenly;
   color: #061bfd;
+  margin-top: 2rem;
   margin-right: 11rem;
   margin-left: 2rem;
 }
 
-.titles-2 > form {
-  padding-top: 0.3rem;
-  margin-top: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 18vh;
+.level {
+  width: 8rem;
+  text-align: right;
+}
+.task {
+  width: 8rem;
 }
 
 input {
@@ -188,7 +201,7 @@ select:hover {
   margin: 0;
   padding-left: 0.5rem;
   padding-right: 0.5rem;
-  color: #fd0606;
+  color: #1706fd;
   font-size: 2.1rem;
 }
 

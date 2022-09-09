@@ -34,12 +34,12 @@
         <p class="modal-notification">Please write a TODO description!</p>
         <button class="close-modal">&times;</button>
       </div>
-      <div class="titles">
-        <h3>Task Description</h3>
-        <h3>Importance Level</h3>
-      </div>
+      <header class="titles">
+        <div class="taskDesc"><h3>Description</h3></div>
+        <div class="importanceLevel"><h3>Level</h3></div>
+      </header>
       <form>
-        <input type="text" class="todo-input" />
+        <input type="text" class="todo-input" maxlength="40" />
         <div class="importance-select">
           <select name="importance" class="importance-todo">
             <option value="high">High</option>
@@ -59,9 +59,9 @@
         </div>
       </form>
       <div class="todolist-container">
-        <div class="titles-2">
-          <h3>Task</h3>
-          <h3>Level</h3>
+        <div class="titles-2 hidden">
+          <h3 class="task">Task</h3>
+          <h3 class="level">Level</h3>
         </div>
         <ul class="todo-list"></ul>
       </div>

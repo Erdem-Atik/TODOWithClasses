@@ -6,6 +6,7 @@ const filter = document.querySelector(".filter-todo");
 const appElements = document.querySelectorAll("form, .todo-container");
 const delBtn = document.querySelector(".todo-buttondel");
 const impToDo = document.querySelector(".importance-todo");
+const titles2 = document.querySelector(".titles-2");
 
 const Task = class {
   id = (Date.now() + "").slice(-10);
@@ -17,7 +18,6 @@ const Task = class {
 };
 
 const LetToDo = class {
-  //  tasks = [];
   constructor() {
     document.addEventListener("DOMContentLoaded", this.getTodos.bind(this));
     toAddbutton.addEventListener("click", this.producenewTask.bind(this));
@@ -78,6 +78,7 @@ const LetToDo = class {
       <button class= "delete-btn"><i class="fas fa-trash"></i></button>
     </div>`;
     toDolist.insertAdjacentHTML("afterbegin", markup);
+    titles2.classList.remove("hidden");
   }
 
   localcontrol() {
