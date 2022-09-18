@@ -5,21 +5,22 @@
   font-family: "Dongle", sans-serif;
   font-family: "Poppins", sans-serif;
   font-family: "Roboto", sans-serif;
-
-  /* border: 2px solid red; */
-}
-h1 {
-  text-align: center;
-  color: #b91c1c;
-  padding-top: 5rem;
-  padding-bottom: 0;
-  font-size: 3rem;
 }
 
 body {
   min-height: 100vh;
-  background-color: #832e2e;
+  background-color: #3535fd;
 }
+
+form {
+  padding-top: 0.3rem;
+  margin-top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 18vh;
+}
+
 .toDo-container {
   position: relative;
   background-image: url("backGroundPostIT.jpg");
@@ -30,13 +31,48 @@ body {
   min-height: 100vh;
   border: 5px solid #37723f;
 }
-
-form {
-  padding-top: 7rem;
+.titles {
   display: flex;
+  /* text-align: center; */
   align-items: center;
-  justify-content: center;
-  min-height: 25vh;
+  align-content: stretch;
+  /* justify-content: space-evenly; */
+  padding: 0;
+  width: auto;
+  color: #061bfd;
+  margin-top: 1rem;
+  margin-right: 0;
+  margin-left: 14rem;
+}
+
+.taskDesc {
+  padding-left: 0;
+  width: 12rem;
+}
+
+.importanceLevel {
+  text-align: right;
+  width: 12rem;
+}
+
+.titles-2 {
+  width: 50%;
+  text-align: center;
+  display: flex;
+  justify-content: space-evenly;
+  color: #061bfd;
+  margin-top: 2rem;
+  margin-right: 11rem;
+  margin-left: 2rem;
+}
+
+.level {
+  width: 8rem;
+  text-align: right;
+}
+.task {
+  width: 8rem;
+  text-align: left;
 }
 
 input {
@@ -53,9 +89,9 @@ input:hover {
   color: blue;
 }
 select {
+  font-size: 1rem;
   height: 4rem;
-  width: 4rem;
-  font-size: 1.5rem;
+  width: 7rem;
   border: 5px solid #37723f;
 }
 select:hover {
@@ -76,6 +112,7 @@ select:hover {
 }
 .todolist-container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   list-style-type: none;
@@ -95,21 +132,24 @@ select:hover {
   display: flex;
   background-color: white;
   box-shadow: 0 3rem 5rem rgba(0, 0, 0, 0.3);
-  justify-self: center;
-  text-align: center;
-  padding: 2rem 1rem 2rem 1rem;
+  justify-content: space-between;
+  padding: 2rem 0.5rem 2rem 0.5rem;
   border: 3px solid #37723f;
   border-radius: 5px;
+  padding-left: 3rem;
+}
+.modal > button {
+  padding: 0rem;
+  justify-content: center;
 }
 
 .modal-notification {
   margin: 0;
-  font-size: 2rem;
+  font-size: 1.3rem;
   padding: 0;
 }
 
 .close-modal {
-  position: absolute;
   right: 2rem;
   font-size: 2rem;
   color: #333;
@@ -117,6 +157,7 @@ select:hover {
   background: none;
   border: none;
   margin-left: 0.2rem;
+  margin-right: 0;
 }
 
 .hidden {
@@ -132,12 +173,31 @@ select:hover {
 .todo-item {
   display: flex;
   padding: 1.5rem 1rem 1.5rem 1rem;
+  justify-content: left;
+  /* border: 2px solid gold; */
+  width: 10rem;
+}
+.todo-item > strong {
+  text-align: left;
+}
+
+.todo-item-dec {
+  width: 20rem;
+  word-wrap: break-word;
+  height: auto;
+  padding: 1.5rem 1rem 1.5rem 1rem;
   justify-content: center;
+}
+
+.importance-todo {
+  font-size: 1rem;
+  width: 9rem;
   text-align: center;
 }
 
 .completed {
   color: #0af82a;
+  text-decoration: line-through;
 }
 
 .complete-btn,
@@ -147,7 +207,7 @@ select:hover {
   margin: 0;
   padding-left: 0.5rem;
   padding-right: 0.5rem;
-  color: #fd0606;
+  color: #1706fd;
   font-size: 2.1rem;
 }
 

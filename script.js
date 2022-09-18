@@ -4,125 +4,148 @@ const toDolist = document.querySelector(".todo-list");
 const modal = document.querySelector(".modal");
 const filter = document.querySelector(".filter-todo");
 const appElements = document.querySelectorAll("form, .todo-container");
+const delBtn = document.querySelector(".todo-buttondel");
+const impToDo = document.querySelector(".importance-todo");
+const titles2 = document.querySelector(".titles-2");
 
-const marker = function (desc) {
-  const markup = ` 
-  <div class="todo">
-  <li class="todo-item"><strong>${desc}</strong></li>
-  <button class= "complete-btn"><i class="fas fa-check"></i></button>
-  <button class= "delete-btn"><i class="fas fa-trash"></i></button>
-</div>`;
-  toDolist.insertAdjacentHTML("afterbegin", markup);
+const Task = class {
+  id = (Date.now() + "").slice(-10);
+  constructor(descrpt, level, status) {
+    this.descrpt = descrpt;
+    this.level = level;
+    this.status = status;
+  }
 };
 
-const addToDo = function () {
-  // appears the notification in case user doesn't write anything input area
-  if (!toDoDesc.value) {
-    modal.classList.remove("hidden");
-    appElements.forEach((el) => {
-      el.classList.add("hidden");
-    });
-    return;
+const LetToDo = class {
+  constructor() {
+    document.addEventListener("DOMContentLoaded", this.getTodos.bind(this));
+    toAddbutton.addEventListener("click", this.producenewTask.bind(this));
+    modal.addEventListener("click", this.removeModal);
+    toDolist.addEventListener("click", this.deleteTodo.bind(this));
+    toDolist.addEventListener("click", this.comleteToDo.bind(this));
+    filter.addEventListener("click", this.filterTodo.bind(this));
   }
-  if (toDoDesc.value) {
-    marker(toDoDesc.value);
-  }
-  saveLocalTodos(toDoDesc.value);
-  toDoDesc.value = "";
-};
 
-toAddbutton.addEventListener("click", function (e) {
-  e.preventDefault(); // research that!
-  addToDo();
-});
-//closing the notification
-modal.addEventListener("click", function (e) {
-  // add click and escape feature!
-  const modalClose = e.target;
-  if (modalClose.classList.contains("close-modal")) {
-    const modalPopUp = modalClose.parentElement;
-    modalPopUp.classList.add("hidden");
-    appElements.forEach((el) => {
-      el.classList.remove("hidden");
+  getTodos() {
+    const todos = this.localcontrol();
+    todos.forEach((newTask) => {
+      this.renderTask(newTask);
     });
   }
-});
 
-const deleteTodo = function (el) {
-  const item = el.target;
-
-  if (item.classList.contains("fa-trash")) {
-    const deletingEl = item.parentElement;
-    const deletingEl2 = deletingEl.parentElement; // workaround, it should be permanent solution
-    console.log(deletingEl2);
-    deletingEl2.remove();
-    removeLocalTodos(deletingEl2);
-  }
-};
-//
-toDolist.addEventListener("click", deleteTodo);
-
-const comleteToDo = function (e) {
-  const completeditem = e.target;
-  if (completeditem.classList.contains("fa-check")) {
-    const completed = completeditem.parentElement; // workaround, it should be permanent solution
-    const completed2 = completed.parentElement;
-    completed2.classList.toggle("completed");
-  }
-};
-// complete toDos
-toDolist.addEventListener("click", comleteToDo);
-
-const filterTodo = function (e) {
-  const todosNode = toDolist.childNodes; //select child Nodes of Parent Node
-  const convertedfromNode = Array.from(todosNode); // convert from Nodelist to Array
-  const filtered = convertedfromNode.filter((el) => el.nodeType === 1); // select just div.todo nodes; div.todo nodetype 1
-
-  filtered.forEach((todo) => {
-    switch (e.target.value) {
-      case "all":
-        todo.style.display = "flex";
-        break;
-      case "completed":
-        todo.classList.contains("completed")
-          ? (todo.style.display = "flex")
-          : (todo.style.display = "none");
-        break;
-      case "uncompleted":
-        !todo.classList.contains("completed")
-          ? (todo.style.display = "flex")
-          : (todo.style.display = "none");
+  producenewTask(e) {
+    e.preventDefault();
+    let newTask;
+    if (!toDoDesc.value) {
+      modal.classList.remove("hidden");
+      appElements.forEach((el) => {
+        el.classList.add("hidden");
+      });
+      return;
     }
-  });
-};
-//filtering toDos whether they are completed or not
-filter.addEventListener("click", filterTodo);
+    if (toDoDesc.value) {
+      e.preventDefault();
+      newTask = new Task(toDoDesc.value, impToDo.value);
+      newTask.id = newTask.id + 1;
+      this.renderTask(newTask);
+    }
+    toDoDesc.value = "";
+    impToDo.selectedIndex = "1";
+    this.saveLocalTodos(newTask);
+  }
+  removeModal(e) {
+    //closing the notification
+    // add click and escape feature!
+    const modalClose = e.target;
+    if (modalClose.classList.contains("close-modal")) {
+      const modalPopUp = modalClose.parentElement;
+      modalPopUp.classList.add("hidden");
+      appElements.forEach((el) => {
+        el.classList.remove("hidden");
+      });
+    }
+  }
 
-const localcontrol = function () {
-  let todos;
-  return localStorage.getItem("todos") === null
-    ? (todos = [])
-    : (todos = JSON.parse(localStorage.getItem("todos")));
+  renderTask(newTask) {
+    const markup = ` 
+    <div class="${
+      newTask.status == "done" ? "todo completed" : "todo"
+    }"  data-id="${newTask.id}" >
+      <li class="todo-item-dec"><strong>${newTask.descrpt}</strong></li>
+      <li class="todo-item"><strong>${newTask.level}</strong></li>
+      <button class= "complete-btn"><i class="fas fa-check"></i></button>
+      <button class= "delete-btn"><i class="fas fa-trash"></i></button>
+    </div>`;
+    toDolist.insertAdjacentHTML("afterbegin", markup);
+    titles2.classList.remove("hidden");
+  }
+
+  localcontrol() {
+    let todos;
+    return localStorage.getItem("todos") === null
+      ? (todos = [])
+      : (todos = JSON.parse(localStorage.getItem("todos")));
+  }
+
+  saveLocalTodos(newTask) {
+    const todos = this.localcontrol();
+    todos.push(newTask);
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }
+  deleteTodo(e) {
+    const item = e.target;
+    if (item.classList.contains("fa-trash")) {
+      const todos = this.localcontrol();
+      const deletingEl = item.parentElement;
+      const deletingEl2 = deletingEl.parentElement; // workaround, it should be permanent solution
+      const deletingTask = deletingEl2.dataset.id;
+      deletingEl2.remove();
+      console.log(todos);
+      //
+      const updatedTodos = todos.filter((item) => item.id !== deletingTask);
+      localStorage.setItem("todos", JSON.stringify(updatedTodos));
+    }
+  }
+  comleteToDo(e) {
+    const completeditem = e.target;
+    if (completeditem.classList.contains("fa-check")) {
+      const todos = this.localcontrol();
+      const completed = completeditem.parentElement; // workaround, it should be permanent solution
+      completed.parentElement.classList.toggle("completed");
+      const completedTaskId = completed.parentElement.dataset.id;
+      todos.forEach((el) => {
+        if (el.id === completedTaskId) {
+          el.status = "done";
+        }
+      });
+      console.log(todos);
+      localStorage.setItem("todos", JSON.stringify(todos));
+    }
+  }
+  filterTodo(e) {
+    //filtering toDos whether they are completed or not
+    const todosNode = toDolist.childNodes; //select child Nodes of Parent Node
+    const convertedfromNode = Array.from(todosNode); // convert from Nodelist to Array
+    const filtered = convertedfromNode.filter((el) => el.nodeType === 1); // select just div.todo nodes; div.todo nodetype 1
+
+    filtered.forEach((todo) => {
+      switch (e.target.value) {
+        case "all":
+          todo.style.display = "flex";
+          break;
+        case "completed":
+          todo.classList.contains("completed")
+            ? (todo.style.display = "flex")
+            : (todo.style.display = "none");
+          break;
+        case "uncompleted":
+          !todo.classList.contains("completed")
+            ? (todo.style.display = "flex")
+            : (todo.style.display = "none");
+      }
+    });
+  }
 };
 
-const saveLocalTodos = function (todo) {
-  const todos = localcontrol();
-  todos.push(todo);
-  localStorage.setItem("todos", JSON.stringify(todos));
-};
-
-const removeLocalTodos = function (todo) {
-  const todos = localcontrol();
-  const todoIndex = todo.children[0].innerText;
-  todos.splice(todos.indexOf(todoIndex), 1);
-  localStorage.setItem("todos", JSON.stringify(todos));
-};
-
-const getTodos = function () {
-  const todos = localcontrol();
-  todos.forEach((todoDescript) => {
-    marker(todoDescript);
-  });
-};
-
-document.addEventListener("DOMContentLoaded", getTodos);
+const toDoApp = new LetToDo();
